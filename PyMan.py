@@ -58,7 +58,7 @@ class PyManMain:
             for event in pygame.event.get():
                 posXSnake,posYSnake = getRowColumn(self.snake.rect.x, self.snake.rect.y, 25 )
                 #posXMonster,posYMonster = getRowColumn(self.monster.rect.x, self.monster.rect.y, 25 )
-                posXMonster,posYMonster = (0,0)
+                posXMonster,posYMonster = (9,9)
                 if event.type == pygame.QUIT: 
                     sys.exit()
                 elif event.type == KEYDOWN:
