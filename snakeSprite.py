@@ -17,8 +17,8 @@ class Snake(basicSprite.Sprite):
         self.pellets = 0
         
         """Set the number of Pixels to move each time"""
-        self.x_dist = 4
-        self.y_dist = 4 
+        self.x_dist = 24
+        self.y_dist = 24
         """Initialize how much we are moving"""
         self.xMove = 0
         self.yMove = 0

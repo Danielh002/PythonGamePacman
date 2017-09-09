@@ -13,6 +13,7 @@ if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
 
 BLOCK_SIZE = 24
+CLOCK_RATE = 20
 
 class PyManMain:
     """The Main PyMan Class - This class handles the main 
@@ -29,6 +30,7 @@ class PyManMain:
         """Create the Screen"""
         self.screen = pygame.display.set_mode((self.width
                                                , self.height))
+        self.game = None
                                                           
     def MainLoop(self):
         """This is the Main Loop of the Game"""
@@ -49,12 +51,14 @@ class PyManMain:
         
         pygame.display.flip()
         while 1:
-            self.clock.tick(25)
+            self.clock.tick(CLOCK_RATE)
             self.snake_sprites.clear(self.screen,self.background)
             self.monster_sprites.clear(self.screen,self.background)
             
             for event in pygame.event.get():
-                
+                posXSnake,posYSnake = getRowColumn(self.snake.rect.x, self.snake.rect.y, 25 )
+                #posXMonster,posYMonster = getRowColumn(self.monster.rect.x, self.monster.rect.y, 25 )
+                posXMonster,posYMonster = (0,0)
                 if event.type == pygame.QUIT: 
                     sys.exit()
                 elif event.type == KEYDOWN:
@@ -88,7 +92,8 @@ class PyManMain:
                                        , self.pellet_sprites
                                        , self.super_pellet_sprites
                                        , self.monster_sprites)
-            self.monster_sprites.update(self.block_sprites)
+            #self.monster_sprites.update(self.block_sprites)
+            self.monster_sprites.update(self.block_sprites, posXSnake, posYSnake , posXMonster, posYMonster , self.layout)
                         
             
                         
@@ -111,7 +116,7 @@ class PyManMain:
             
             pygame.display.update(reclist)
            # pygame.display.flip()
-                    
+                        
     def LoadSprites(self):
         """Load all of the sprites that we need"""
         """calculate the center point offset"""
@@ -119,7 +124,7 @@ class PyManMain:
         y_offset = (BLOCK_SIZE/2)
         """Load the level"""        
         level1 = level001.level()
-        layout = level1.getLayout()
+        self.layout = level1.getLayout()
 
         img_list = level1.getSprites()
         
@@ -130,31 +135,36 @@ class PyManMain:
         self.block_sprites = pygame.sprite.RenderUpdates()
         self.monster_sprites = pygame.sprite.RenderUpdates()
         
-        for y in xrange(len(layout)):
-            for x in xrange(len(layout[y])):
+        for y in xrange(len(self.layout)):
+            for x in xrange(len(self.layout[y])):
                 """Get the center point for the rects"""
                 centerPoint = [(x*BLOCK_SIZE)+x_offset,(y*BLOCK_SIZE+y_offset)]
-                if layout[y][x]==level1.BLOCK:
+                if self.layout[y][x]==level1.BLOCK:
                     block = basicSprite.Sprite(centerPoint, img_list[level1.BLOCK])
                     self.block_sprites.add(block)
-                elif layout[y][x]==level1.SNAKE:
+                elif self.layout[y][x]==level1.SNAKE:
                     self.snake = Snake(centerPoint,img_list[level1.SNAKE])
-                elif layout[y][x]==level1.PELLET:
+                elif self.layout[y][x]==level1.PELLET:
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
                     self.pellet_sprites.add(pellet) 
-                elif layout[y][x]==level1.MONSTER:
+                elif self.layout[y][x]==level1.MONSTER:
                     monster = Monster(centerPoint, img_list[level1.MONSTER]
                                        , img_list[level1.SCARED_MONSTER])
                     self.monster_sprites.add(monster) 
                     """We also need pellets where the monsters are"""
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
                     self.pellet_sprites.add(pellet) 
-                elif layout[y][x]==level1.SUPER_PELLET:
+                elif self.layout[y][x]==level1.SUPER_PELLET:
                     super_pellet = basicSprite.Sprite(centerPoint, img_list[level1.SUPER_PELLET])
                     self.super_pellet_sprites.add(super_pellet) 
                      
         """Create the Snake group"""            
-        self.snake_sprites = pygame.sprite.RenderUpdates(self.snake)                                  
+        self.snake_sprites = pygame.sprite.RenderUpdates(self.snake)
+
+def getRowColumn(x,y,w):
+    colum=(x+(w/2))/w
+    row=(y+(w/2))/w
+    return (row,colum)                                  
 
 if __name__ == "__main__":
     MainWindow = PyManMain(500,575)

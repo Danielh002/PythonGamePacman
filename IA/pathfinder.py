@@ -21,6 +21,7 @@ class Pathfinder(object):
         """
         self.route = self.pathFind()
         self.route_coordinates = self.route_as_coordinates()
+        print self.route_coordinates
         return self.route_coordinates
 
     #@TODO
