@@ -8,6 +8,7 @@ from pygame.locals import *
 from helpers import *
 from snakeSprite import *
 from basicMonster import Monster
+from Monsters.OrangeGhost import OrangeMonster
 
 if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
@@ -57,8 +58,12 @@ class PyManMain:
             
             for event in pygame.event.get():
                 posXSnake,posYSnake = getRowColumn(self.snake.rect.x, self.snake.rect.y, 25 )
-                #posXMonster,posYMonster = getRowColumn(self.monster.rect.x, self.monster.rect.y, 25 )
-                posXMonster,posYMonster = (9,9)
+                print self.monster_sprites
+                for monster in self.monster_sprites:
+                        MposXMonster= monster.rect.x
+                        MposYMonster= monster.rect.y
+                posXMonster,posYMonster = getRowColumn(MposXMonster, MposYMonster, 25 )
+                #posXMonster,posYMonster = (9,9)
                 if event.type == pygame.QUIT: 
                     sys.exit()
                 elif event.type == KEYDOWN:
@@ -153,7 +158,14 @@ class PyManMain:
                     self.monster_sprites.add(monster) 
                     """We also need pellets where the monsters are"""
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
-                    self.pellet_sprites.add(pellet) 
+                    self.pellet_sprites.add(pellet)
+                elif self.layout[y][x]==level1.ORANGE_MONSTER:
+                    monster = OrangeMonster(centerPoint, img_list[level1.MONSTER]
+                                       , img_list[level1.SCARED_MONSTER])
+                    self.monster_sprites.add(monster) 
+                    """We also need pellets where the monsters are"""
+                    pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
+                    self.pellet_sprites.add(pellet)  
                 elif self.layout[y][x]==level1.SUPER_PELLET:
                     super_pellet = basicSprite.Sprite(centerPoint, img_list[level1.SUPER_PELLET])
                     self.super_pellet_sprites.add(super_pellet) 

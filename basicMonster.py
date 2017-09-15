@@ -22,12 +22,13 @@ class Monster(basicSprite.Sprite):
         self.scared = False
         self.xPosition = 10
         self.yPosition = 10
-        self.direction = random.randint(1,4)
-        self.dist = 3
-        self.moves = random.randint(100,200)
+
+        self.direction = 0
+        self.dist = 0
+        self.moves = 0
         self.moveCount = 0;
 
-    def updateOriginal(self,block_group):
+    def update(self,block_group):
         """Called when the Monster sprit should update itself"""        
         xMove,yMove = 0,0
         if self.direction==1:
@@ -53,32 +54,6 @@ class Monster(basicSprite.Sprite):
             self.moveCount = 0;            
 
 
-    def update(self,block_group,posObjetivoX, posObjetivoY, posXMonter, posYMonster, tablero):
-        ##if self.scared != scared:
-    
-        start, finish = (posXMonter,posYMonster),(posObjetivoX, posObjetivoY)
-        pathfinder = AStar( tablero, start, finish, h)
-        pathfinder.reverse()
-
-        print pathfinder[0], pathfinder[1]
-
-
-        direction = self.calculateDirection( pathfinder[0][0],  pathfinder[0][1], pathfinder[1][0],  pathfinder[1][1])
-        xMove,yMove = 0,0 
-        if self.direction==1:
-            xMove = -self.dist
-        elif self.direction==2:
-            yMove = -self.dist
-        elif self.direction==3:
-            xMove = self.dist
-        elif self.direction==4:
-            yMove = self.dist
-        
-        self.rect.move_ip(xMove,yMove) #Move the Rect
-
-
-
-
     def calculateDirection(self, filaInical, columnaInicial, fila , col  ):
         direction = -1
         if( filaInical< fila ):
@@ -91,17 +66,6 @@ class Monster(basicSprite.Sprite):
             direction = 2
         return direction
 
-
-
-
-
-        
-
-
-
-
-        
-    
     def SetScared(self, scared):
         """Tell the monster to be scared or not"""
         """Should we update out scared image?"""
