@@ -24,7 +24,7 @@ class Monster(basicSprite.Sprite):
         self.yPosition = 10
 
         self.direction = 0
-        self.dist = 0
+        self.dist = 12
         self.moves = 0
         self.moveCount = 0;
 
@@ -55,19 +55,19 @@ class Monster(basicSprite.Sprite):
             """If we have moved enough, choose a new direction"""
             self.direction = random.randint(1,4)
             self.moves = random.randint(100,200)
-            self.moveCount = 0;            
+            self.moveCount = 0;           
 
 
     def calculateDirection(self, filaInical, columnaInicial, filaFinal, colFinal ):
         direction = -1
         if( filaInical< filaFinal):
-            direction = 2
-        elif( filaInical> filaFinal):
             direction = 4
+        elif( filaInical> filaFinal):
+            direction = 2
         elif( columnaInicial < colFinal):
             direction = 3
         elif( columnaInicial > colFinal):
-            direction = 1er
+            direction = 1
         return direction
 
     def SetScared(self, scared):
@@ -86,4 +86,19 @@ class Monster(basicSprite.Sprite):
         self.rect = self.original_rect
         self.scared = False
         self.image = self.normal_image
-            
+        
+    #Matriz 23 x 21       
+    def PosicionInversa(self, posX , posY):
+        print "PLIS", posX,posY
+        eSuperiorIzquierda = (3,2)
+        eSuperiorDerecha = (3,18)
+        eInferiorIzquierda = (20,2)
+        eInferiorDerecha = (20,18)
+        if ( posX <= 16 and posY <= 15 ):
+            return eInferiorDerecha
+        elif( posX<=16 and posY> 15 ):
+            return eInferiorIzquierda
+        elif( posX > 16 and posY <= 15):
+            return eSuperiorDerecha
+        elif( posX >16 and posY> 15):
+            return eInferiorIzquierda

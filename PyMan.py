@@ -14,7 +14,7 @@ if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
 
 BLOCK_SIZE = 24
-CLOCK_RATE = 20
+CLOCK_RATE = 10
 
 class PyManMain:
     """The Main PyMan Class - This class handles the main 
@@ -57,13 +57,6 @@ class PyManMain:
             self.monster_sprites.clear(self.screen,self.background)
             
             for event in pygame.event.get():
-                posXSnake,posYSnake = getRowColumn(self.snake.rect.x, self.snake.rect.y, 25 )
-                print self.monster_sprites
-                for monster in self.monster_sprites:
-                        MposXMonster= monster.rect.x
-                        MposYMonster= monster.rect.y
-                posXMonster,posYMonster = getRowColumn(MposXMonster, MposYMonster, 25 )
-                #posXMonster,posYMonster = (9,9)
                 if event.type == pygame.QUIT: 
                     sys.exit()
                 elif event.type == KEYDOWN:
@@ -92,13 +85,20 @@ class PyManMain:
                     """For now kist quit"""
                     sys.exit()
                     
+            posXSnake,posYSnake = self.getRowColumn(self.snake.rect.x, self.snake.rect.y, BLOCK_SIZE )
+            for monster in self.monster_sprites:
+                    MposXMonster= monster.rect.x
+                    MposYMonster= monster.rect.y
+            posXMonster,posYMonster = self.getRowColumn(MposXMonster, MposYMonster, BLOCK_SIZE)
+            print "Posicion snake", posXSnake, posYSnake
+            print "Posicion monster", posXMonster, posYMonster
             """Update the snake sprite"""        
             self.snake_sprites.update(self.block_sprites
                                        , self.pellet_sprites
                                        , self.super_pellet_sprites
                                        , self.monster_sprites)
             #self.monster_sprites.update(self.block_sprites)
-            self.monster_sprites.update(self.block_sprites, posXSnake, posYSnake , posXMonster, posYMonster , self.layout)
+            self.monster_sprites.update(self.block_sprites, posXSnake, posYSnake, posXMonster, posYMonster , self.layout)
                         
             
                         
@@ -173,10 +173,10 @@ class PyManMain:
         """Create the Snake group"""            
         self.snake_sprites = pygame.sprite.RenderUpdates(self.snake)
 
-def getRowColumn(x,y,w):
-    colum=(x+(w/2))/w
-    row=(y+(w/2))/w
-    return (row,colum)                                  
+    def getRowColumn(self,x,y,w):
+        colum=(x+(w/2))/w
+        row=(y+(w/2))/w
+        return (row,colum)                                  
 
 if __name__ == "__main__":
     MainWindow = PyManMain(500,575)
