@@ -90,8 +90,7 @@ class PyManMain:
                     MposXMonster= monster.rect.x
                     MposYMonster= monster.rect.y
             posXMonster,posYMonster = self.getRowColumn(MposXMonster, MposYMonster, BLOCK_SIZE)
-            print "Posicion snake", posXSnake, posYSnake
-            print "Posicion monster", posXMonster, posYMonster
+            #print "Posicion snake", posXSnake, posYSnake
             """Update the snake sprite"""        
             self.snake_sprites.update(self.block_sprites
                                        , self.pellet_sprites
