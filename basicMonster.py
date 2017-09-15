@@ -31,12 +31,16 @@ class Monster(basicSprite.Sprite):
     def update(self,block_group):
         """Called when the Monster sprit should update itself"""        
         xMove,yMove = 0,0
+        #Izquierda direction = 1
         if self.direction==1:
             xMove = -self.dist
+        #Abajo direction = 2
         elif self.direction==2:
             yMove = -self.dist
+        #Derecha direction = 3
         elif self.direction==3:
             xMove = self.dist
+        #Arriba direction = 4
         elif self.direction==4:
             yMove = self.dist
         
@@ -54,16 +58,16 @@ class Monster(basicSprite.Sprite):
             self.moveCount = 0;            
 
 
-    def calculateDirection(self, filaInical, columnaInicial, fila , col  ):
+    def calculateDirection(self, filaInical, columnaInicial, filaFinal, colFinal ):
         direction = -1
-        if( filaInical< fila ):
-            direction = 1
-        elif ( filaInical> fila):
-            direction = 3
-        elif( columnaInicial < col):
-            direction = 4
-        elif( columnaInicial > col):
+        if( filaInical< filaFinal):
             direction = 2
+        elif( filaInical> filaFinal):
+            direction = 4
+        elif( columnaInicial < colFinal):
+            direction = 3
+        elif( columnaInicial > colFinal):
+            direction = 1er
         return direction
 
     def SetScared(self, scared):
