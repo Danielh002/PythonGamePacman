@@ -55,7 +55,27 @@ class OrangeMonster(Monster):
                     self.direction = random.randint(1,4)
                     self.moves = random.randint(100,200)
                     self.moveCount = 0; 
-
+        else:
+            finish = self.PosicionInversa(posXMonster, posYMonster)
+            pathfinder = AStar( tablero, start, finish, h)
+            if ( pathfinder != False ):
+                if ( len(pathfinder) > 1): 
+                    print pathfinder
+                    self.direction = self.calculateDirection( pathfinder[-1][0],  pathfinder[-1][1], pathfinder[-2][0],  pathfinder[-2][1])
+                    xMove,yMove = 0,0
+                    #Izquierda direction = 1
+                    if self.direction==1:
+                        xMove = -self.dist
+                    #Abajo direction = 2
+                    elif self.direction==2:
+                        yMove = -self.dist
+                    #Derecha direction = 3
+                    elif self.direction==3:
+                        xMove = self.dist
+                    #Arriba direction = 4
+                    elif self.direction==4:
+                        yMove = self.dist
+                    self.rect.move_ip(xMove,yMove) #Move the Rect
     def calculateDirection(self, filaInical, columnaInicial, fila , col ):
         return Monster.calculateDirection(self, filaInical, columnaInicial, fila , col)
 

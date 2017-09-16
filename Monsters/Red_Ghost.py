@@ -6,7 +6,7 @@ from basicMonster import *
 class RedMonster(Monster): 
    
     def __init__(self, centerPoint, image, scared_image=None):
-        Monster.__init__(self,centerPoint, image, scared_image)
+        Monster.__init__(self,centerPoint, image, scared_image=None)
 
     def update(self, block_group, posObjetivoX
         , posObjetivoY, posXMonter, posYMonster, tablero):
