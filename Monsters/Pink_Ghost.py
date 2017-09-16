@@ -14,7 +14,7 @@ class PinkMonster(Monster):
             start, finish = (posXMonter,posYMonster),self.getPointIntersection(posObjetivoX, posObjetivoY,direction,tablero)
         else:
             start = (posXMonter,posYMonster)
-            finish = self.PosicionInversa(posXMonter, posYMonster)
+            finish = self.PosicionInversa( posObjetivoX, posObjetivoY)
 
         pathfinder = AStar( tablero, start, finish, h)
         if ( pathfinder != False ):

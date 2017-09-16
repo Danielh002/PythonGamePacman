@@ -6,7 +6,7 @@ from basicMonster import *
 class RedMonster(Monster): 
    
     def __init__(self, centerPoint, image, scared_image=None):
-        Monster.__init__(self,centerPoint, image, scared_image=None)
+        Monster.__init__(self,centerPoint, image, scared_image)
 
     def update(self, block_group, posObjetivoX
         , posObjetivoY, posXMonter, posYMonster, tablero):
@@ -14,7 +14,7 @@ class RedMonster(Monster):
             start, finish = (posXMonter,posYMonster),(posObjetivoX, posObjetivoY)
         else:
             start = (posXMonter,posYMonster)
-            finish = self.PosicionInversa(posXMonter, posYMonster)
+            finish = self.PosicionInversa( posObjetivoX, posObjetivoY)
 
         pathfinder = AStar( tablero, start, finish, h)
         if ( pathfinder != False ):

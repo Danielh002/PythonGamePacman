@@ -27,7 +27,7 @@ class Monster(basicSprite.Sprite):
         self.direction = 1
         self.dist = 24
         self.moves = 0
-        self.moveCount = 10;
+        self.moveCount = 10
 
     def update(self,block_group):
         """Called when the Monster sprit should update itself"""        
@@ -94,11 +94,11 @@ class Monster(basicSprite.Sprite):
         eSuperiorDerecha = (3,18)
         eInferiorIzquierda = (20,2)
         eInferiorDerecha = (20,18)
-        if ( posX <= 16 and posY <= 15 ):
+        if ( posX <= 12 and posY <= 10 ):
             return eInferiorDerecha
-        elif( posX<=16 and posY> 15 ):
+        elif( posX<=12 and posY> 10 ):
             return eInferiorIzquierda
-        elif( posX > 16 and posY <= 15):
+        elif( posX > 12 and posY <= 10):
             return eSuperiorDerecha
-        elif( posX >16 and posY> 15):
+        elif( posX >12 and posY> 10):
             return eInferiorIzquierda

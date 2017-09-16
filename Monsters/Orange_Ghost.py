@@ -56,7 +56,7 @@ class OrangeMonster(Monster):
                     self.moves = random.randint(100,200)
                     self.moveCount = 0; 
         else:
-            finish = self.PosicionInversa(posXMonster, posYMonster)
+            finish = self.PosicionInversa( posObjetivoX, posObjetivoY)
             pathfinder = AStar( tablero, start, finish, h)
             if ( pathfinder != False ):
                 if ( len(pathfinder) > 1): 
