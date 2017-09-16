@@ -8,7 +8,7 @@ from pygame.locals import *
 from helpers import *
 from snakeSprite import *
 from basicMonster import Monster
-from Monsters.OrangeGhost import OrangeMonster
+from Monsters.Red_Ghost import RedMonster
 
 if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
@@ -158,8 +158,8 @@ class PyManMain:
                     """We also need pellets where the monsters are"""
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
                     self.pellet_sprites.add(pellet)
-                elif self.layout[y][x]==level1.ORANGE_MONSTER:
-                    monster = OrangeMonster(centerPoint, img_list[level1.MONSTER]
+                elif self.layout[y][x]==level1.RED_MONSTER:
+                    monster = RedMonster(centerPoint, img_list[level1.MONSTER]
                                        , img_list[level1.SCARED_MONSTER])
                     self.monster_sprites.add(monster) 
                     """We also need pellets where the monsters are"""
