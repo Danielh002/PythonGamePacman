@@ -27,7 +27,7 @@ class Monster(basicSprite.Sprite):
         self.direction = 1
         self.dist = 12
         self.moves = 0
-        self.moveCount = 10;
+        self.moveCount = 10
 
     def update(self,block_group):
         """Called when the Monster sprit should update itself"""        
