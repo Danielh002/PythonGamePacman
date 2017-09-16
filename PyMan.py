@@ -7,14 +7,18 @@ import basicSprite
 from pygame.locals import *
 from helpers import *
 from snakeSprite import *
+
+"""Monsters imports"""
 from basicMonster import Monster
 from Monsters.Red_Ghost import RedMonster
+from Monsters.Orange_Ghost import OrangeMonster
+from Monsters.Pink_Ghost import PinkMonster
 
-if not pygame.font: print 'Warning, fonts disabled'
+if not pygame.font: print 'Warning, fonts disabled' 
 if not pygame.mixer: print 'Warning, sound disabled'
 
 BLOCK_SIZE = 24
-CLOCK_RATE = 10
+CLOCK_RATE = 15
 
 class PyManMain:
     """The Main PyMan Class - This class handles the main 
@@ -32,6 +36,14 @@ class PyManMain:
         self.screen = pygame.display.set_mode((self.width
                                                , self.height))
         self.game = None
+        """InitMonsters"""
+        self.red_monster = None
+        self.orange_monster = None
+        self.pink_monster = None
+        """InitSprites"""
+        self.red_monster_sprites = None
+        self.orange_monster_sprites = None
+        self.pink_monster_sprites = None
                                                           
     def MainLoop(self):
         """This is the Main Loop of the Game"""
@@ -55,6 +67,9 @@ class PyManMain:
             self.clock.tick(CLOCK_RATE)
             self.snake_sprites.clear(self.screen,self.background)
             self.monster_sprites.clear(self.screen,self.background)
+            self.red_monster_sprites.clear(self.screen,self.background)
+            self.orange_monster_sprites.clear(self.screen,self.background)
+            self.pink_monster_sprites.clear(self.screen,self.background)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
@@ -77,28 +92,48 @@ class PyManMain:
                     pygame.time.set_timer(SUPER_STATE_OVER,0)
                     for monster in self.monster_sprites.sprites():
                         monster.SetScared(False)
+                    self.red_monster.SetScared(False)
+                    self.orange_monster.SetScared(False)
+                    self.pink_monster.SetScared(False)
                 elif event.type == SUPER_STATE_START:
                     for monster in self.monster_sprites.sprites():
                         monster.SetScared(True)
+                    self.red_monster.SetScared(True)
+                    self.orange_monster.SetScared(True)
+                    self.pink_monster.SetScared(True)
                 elif event.type == SNAKE_EATEN:
                     """The snake is dead!"""
                     """For now kist quit"""
                     sys.exit()
                     
             posXSnake,posYSnake = self.getRowColumn(self.snake.rect.x, self.snake.rect.y, BLOCK_SIZE )
-            for monster in self.monster_sprites:
-                    MposXMonster= monster.rect.x
-                    MposYMonster= monster.rect.y
-            posXMonster,posYMonster = self.getRowColumn(MposXMonster, MposYMonster, BLOCK_SIZE)
-            #print "Posicion snake", posXSnake, posYSnake
+            
+            #RedMonsterPositions  
+            if (self.red_monster):
+                tempRedMonsterX = self.red_monster.rect.x
+                tempRedMonsterY = self.red_monster.rect.y
+                redMonsterX, redMonsterY = self.getRowColumn(tempRedMonsterX, tempRedMonsterY, BLOCK_SIZE)
+                self.red_monster_sprites.update(self.block_sprites, posXSnake, posYSnake, redMonsterX, redMonsterY , self.layout)
+            #OrangeMonsterPositions
+            if (self.orange_monster):
+                tempOrangeMonsterX = self.orange_monster.rect.x
+                tempOrangeMonsterY = self.orange_monster.rect.y
+                orangeMonsterX,orangeMonsterY = self.getRowColumn(tempOrangeMonsterX, tempOrangeMonsterY, BLOCK_SIZE)
+                self.orange_monster_sprites.update(self.block_sprites, posXSnake, posYSnake, orangeMonsterX, orangeMonsterY , self.layout)
+            #PinkMonsterPositions 
+            if (self.pink_monster):      
+                tempPinkMonsterX = self.pink_monster.rect.x
+                tempPinkMonsterY = self.pink_monster.rect.y
+                pinkMonsterX, pinkMonsterY = self.getRowColumn(tempPinkMonsterX, tempPinkMonsterY, BLOCK_SIZE)
+                self.pink_monster_sprites.update(self.block_sprites, posXSnake, posYSnake, pinkMonsterX, pinkMonsterY , self.layout)
             """Update the snake sprite"""        
             self.snake_sprites.update(self.block_sprites
                                        , self.pellet_sprites
                                        , self.super_pellet_sprites
                                        , self.monster_sprites)
             #self.monster_sprites.update(self.block_sprites)
-            self.monster_sprites.update(self.block_sprites, posXSnake, posYSnake, posXMonster, posYMonster , self.layout)
-                        
+        
+          
             
                         
             """Do the Drawging"""     
@@ -116,6 +151,12 @@ class PyManMain:
             reclist += self.super_pellet_sprites.draw(self.screen)
             reclist += self.snake_sprites.draw(self.screen)
             reclist +=  self.monster_sprites.draw(self.screen)
+            if ( self.red_monster_sprites):
+                reclist +=  self.red_monster_sprites.draw(self.screen)
+            if ( self.orange_monster_sprites ):
+                reclist +=  self.orange_monster_sprites.draw(self.screen)
+            if ( self.pink_monster_sprites):
+                reclist +=  self.pink_monster_sprites.draw(self.screen)
             #reclist += (self.block_sprites.draw(self.screen))
             
             pygame.display.update(reclist)
@@ -159,18 +200,39 @@ class PyManMain:
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
                     self.pellet_sprites.add(pellet)
                 elif self.layout[y][x]==level1.RED_MONSTER:
-                    monster = RedMonster(centerPoint, img_list[level1.MONSTER]
+                    self.red_monster = RedMonster(centerPoint, img_list[level1.RED_MONSTER]
                                        , img_list[level1.SCARED_MONSTER])
-                    self.monster_sprites.add(monster) 
+                    #self.monster_sprites.add(monster) 
                     """We also need pellets where the monsters are"""
                     pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
                     self.pellet_sprites.add(pellet)  
+                elif self.layout[y][x]==level1.ORANGE_MONSTER:
+                    self.orange_monster = OrangeMonster(centerPoint, img_list[level1.ORANGE_MONSTER]
+                                       , img_list[level1.SCARED_MONSTER])
+                    #self.monster_sprites.add(monster) 
+                    """We also need pellets where the monsters are"""
+                    pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
+                    self.pellet_sprites.add(pellet)  
+                elif self.layout[y][x]==level1.PINK_MONSTER:
+                    self.pink_monster = PinkMonster(centerPoint, img_list[level1.PINK_MONSTER]
+                                       , img_list[level1.SCARED_MONSTER])
+                    #self.monster_sprites.add(monster) 
+                    """We also need pellets where the monsters are"""
+                    pellet = basicSprite.Sprite(centerPoint, img_list[level1.PELLET])
+                    self.pellet_sprites.add(pellet)  
+
                 elif self.layout[y][x]==level1.SUPER_PELLET:
                     super_pellet = basicSprite.Sprite(centerPoint, img_list[level1.SUPER_PELLET])
                     self.super_pellet_sprites.add(super_pellet) 
                      
         """Create the Snake group"""            
         self.snake_sprites = pygame.sprite.RenderUpdates(self.snake)
+        if ( self.red_monster):
+            self.red_monster_sprites = pygame.sprite.RenderUpdates(self.red_monster)
+        if ( self.orange_monster ):
+            self.orange_monster_sprites = pygame.sprite.RenderUpdates(self.orange_monster)
+        if ( self.pink_monster):
+            self.pink_monster_sprites = pygame.sprite.RenderUpdates(self.pink_monster)
 
     def getRowColumn(self,x,y,w):
         colum=(x+(w/2))/w

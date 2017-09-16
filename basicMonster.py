@@ -4,6 +4,7 @@ import pygame
 import basicSprite
 import random
 from IA.AStar import *
+from IA.checkVH import *
 
 class Monster(basicSprite.Sprite):
     """This is our sMonster that will move around the screen"""
@@ -23,10 +24,10 @@ class Monster(basicSprite.Sprite):
         self.xPosition = 10
         self.yPosition = 10
 
-        self.direction = 0
+        self.direction = 1
         self.dist = 12
         self.moves = 0
-        self.moveCount = 0;
+        self.moveCount = 10;
 
     def update(self,block_group):
         """Called when the Monster sprit should update itself"""        
@@ -89,7 +90,6 @@ class Monster(basicSprite.Sprite):
         
     #Matriz 23 x 21       
     def PosicionInversa(self, posX , posY):
-        print "PLIS", posX,posY
         eSuperiorIzquierda = (3,2)
         eSuperiorDerecha = (3,18)
         eInferiorIzquierda = (20,2)

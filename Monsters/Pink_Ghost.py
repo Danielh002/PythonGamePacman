@@ -3,7 +3,7 @@
 from basicMonster import *
 
 
-class RedMonster(Monster): 
+class PinkMonster(Monster): 
    
     def __init__(self, centerPoint, image, scared_image=None):
         Monster.__init__(self,centerPoint, image, scared_image=None)
@@ -19,7 +19,6 @@ class RedMonster(Monster):
         pathfinder = AStar( tablero, start, finish, h)
         if ( pathfinder != False ):
             if ( len(pathfinder) > 1): 
-                print pathfinder
                 self.direction = self.calculateDirection( pathfinder[-1][0],  pathfinder[-1][1], pathfinder[-2][0],  pathfinder[-2][1])
                 xMove,yMove = 0,0
                 #Izquierda direction = 1
@@ -50,3 +49,5 @@ class RedMonster(Monster):
 
     def PosicionInversa(self, posX , posY):
         return Monster.PosicionInversa(self, posX, posY)
+
+    #def Adelantar(self, filaInical, columnaInicial, filaFinal , colFinal)
