@@ -9,9 +9,9 @@ class PinkMonster(Monster):
         Monster.__init__(self,centerPoint, image, scared_image)
 
     def update(self, block_group, posObjetivoX
-        , posObjetivoY, posXMonter, posYMonster, tablero):
+        , posObjetivoY, posXMonter, posYMonster, tablero,direction):
         if self.scared != True:    
-            start, finish = (posXMonter,posYMonster),(posObjetivoX, posObjetivoY)
+            start, finish = (posXMonter,posYMonster),self.getPointIntersection(posObjetivoX, posObjetivoY,direction,tablero)
         else:
             start = (posXMonter,posYMonster)
             finish = self.PosicionInversa(posXMonter, posYMonster)
@@ -50,4 +50,24 @@ class PinkMonster(Monster):
     def PosicionInversa(self, posX , posY):
         return Monster.PosicionInversa(self, posX, posY)
 
+    def getPointIntersection(self,r,c,direction,map):
+        i=0
+        res=(r,c)
+        if(direction==1):
+            while(c+i<len(map[0]) and map[r][c+i]!=1 and i<3):
+                res=(r,c+i)
+                i+=1
+        elif(direction==2):
+            while(r+i<len(map) and map[r+i][c]!=1 and i<3):
+                res=(r+i,c)
+                i+=1
+        elif(direction==3):
+            while(c+i>=0 and map[r][c+i]!=1 and i>-3):
+                res=(r,c+i)
+                i-=1
+        elif(direction==4):
+            while(r+i>=0 and map[r+i][c]!=1 and i>-3):
+                res=(r+i,c)
+                i-=1
+        return res
     #def Adelantar(self, filaInical, columnaInicial, filaFinal , colFinal)

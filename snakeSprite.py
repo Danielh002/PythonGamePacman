@@ -24,6 +24,7 @@ class Snake(basicSprite.Sprite):
         self.yMove = 0
         """By default we are not in the "super" state"""
         self.superState = False
+        self.direction=1
         
     def MoveKeyDown(self, key):
         """This function sets the xMove or yMove variables that will
@@ -33,12 +34,16 @@ class Snake(basicSprite.Sprite):
         
         if (key == K_RIGHT):
             self.xMove += self.x_dist
+            self.direction=1
         elif (key == K_LEFT):
             self.xMove += -self.x_dist
+            self.direction=3
         elif (key == K_UP):
             self.yMove += -self.y_dist
+            self.direction=4
         elif (key == K_DOWN):
             self.yMove += self.y_dist
+            self.direction=2
         
     def MoveKeyUp(self, key):
         """This function resets the xMove or yMove variables that will

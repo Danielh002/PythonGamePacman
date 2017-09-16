@@ -125,7 +125,7 @@ class PyManMain:
                 tempPinkMonsterX = self.pink_monster.rect.x
                 tempPinkMonsterY = self.pink_monster.rect.y
                 pinkMonsterX, pinkMonsterY = self.getRowColumn(tempPinkMonsterX, tempPinkMonsterY, BLOCK_SIZE)
-                self.pink_monster_sprites.update(self.block_sprites, posXSnake, posYSnake, pinkMonsterX, pinkMonsterY , self.layout)
+                self.pink_monster_sprites.update(self.block_sprites, posXSnake, posYSnake, pinkMonsterX, pinkMonsterY , self.layout,self.snake.direction)
             """Update the snake sprite"""        
             self.snake_sprites.update(self.block_sprites
                                        , self.pellet_sprites
