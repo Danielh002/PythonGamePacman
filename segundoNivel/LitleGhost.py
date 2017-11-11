@@ -1,10 +1,12 @@
 import pygame
-class LitleGhost(pygame.sprite.Sprite):
+import flocking
+class LitleGhost(pygame.sprite.Sprite,flocking.agent):
     def __init__(self,x=500,y=500):
         self.image=pygame.image.load("images/monster_green.png")
         self.rect=self.image.get_rect()
         self.rect.top=y
         self.rect.left=x
+        flocking.agent.__init__(self,x,y,1,1)
     def move(self,playerX,playerY):
         dx=playerX-self.rect.left
         dy=playerY-self.rect.top
