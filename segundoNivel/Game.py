@@ -2,6 +2,7 @@ import pygame
 from Player import *
 from Ghost import *
 from LitleGhost import *
+import flocking
 class Game:
     def __init__(self):
         pygame.init()
@@ -10,12 +11,13 @@ class Game:
         pygame.display.set_caption("PAKMAN LV2")
         self.clock=pygame.time.Clock()
         self.player=Player()
-        self.ghost=Ghost()
+        self.ghost=Ghost(450,150)
         self.litleGhost=[LitleGhost(100+(i*50),500) for i in range(3)]
         self.loadImages()
         self.background = pygame.Surface(self.window.get_size())
         self.background = self.background.convert()
         self.background.fill((0,0,0))
+        self.flocking=flocking.flocking([self.ghost]+self.litleGhost)
         
 
     def loadImages(self):
@@ -35,6 +37,10 @@ class Game:
                     if(event.key in [pygame.K_RIGHT,pygame.K_LEFT,pygame.K_DOWN,pygame.K_UP]):
                         self.player.moveKeyUp(event.key)
             self.player.move()
+            self.flocking.computeAlignaments() #
+            self.flocking.computeCohesion() #
+            self.flocking.computeSeparation() #
+            self.flocking.copyComputation() #
             self.ghost.move(self.player.rect.left,self.player.rect.top)
             for i in self.litleGhost:
                 i.move(self.ghost.rect.left,self.ghost.rect.top)
