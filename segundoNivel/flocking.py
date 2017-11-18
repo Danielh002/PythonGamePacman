@@ -12,10 +12,10 @@ class flocking():
         self.resultAlignaments=None
         self.resultCohesion=None
         self.resultSeparation=None
-        self.distanceFlocking=500
-        self.alignamentWeight=2
-        self.cohesionWeight=2
-        self.separationWeigth=1
+        self.distanceFlocking=1000
+        self.alignamentWeight=1
+        self.cohesionWeight=5
+        self.separationWeigth=3
     def computeAlignaments(self):
         # velocity
         res=[]
@@ -83,8 +83,10 @@ class flocking():
                 v[0]=self.resultAlignaments[i][0]*self.alignamentWeight+self.resultCohesion[i][0]*self.cohesionWeight+self.resultSeparation[i][0]*self.separationWeigth
                 v[1]=self.resultAlignaments[i][1]*self.alignamentWeight+self.resultCohesion[i][1]*self.cohesionWeight+self.resultSeparation[i][1]*self.separationWeigth
                 v=normalize(v)
-                self.agents[i].velX=v[0]
-                self.agents[i].velY=v[1]
+                self.agents[i].velX+=v[0]
+                self.agents[i].velY+=v[1]
+                aux=[self.agents[i].velX,self.agents[i].velY]
+                self.agents[i].velX,self.agents[i].velY=normalize(aux)
             i+=1
 class agent():
     def __init__(self,x,y,vx,vy):

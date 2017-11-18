@@ -8,7 +8,7 @@ class LitleGhost(pygame.sprite.Sprite,flocking.agent):
         self.rect.left=x
         flocking.agent.__init__(self,x,y,0,0)
     def move(self,playerX,playerY):
-        self.rect.move_ip(self.velX*8,self.velY*8)
+        self.rect.move_ip(self.velX*9,self.velY*9)
         self.posX,self.posY=self.rect.left,self.rect.top
         # dx=playerX-self.rect.left
         # dy=playerY-self.rect.top
