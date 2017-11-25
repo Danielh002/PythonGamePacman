@@ -2,7 +2,7 @@ import pygame
 import flocking
 class LitleGhost(pygame.sprite.Sprite,flocking.agent):
     def __init__(self,x=500,y=500):
-        self.image=pygame.image.load("images/monster_green.png")
+        self.image=pygame.image.load("images/littleGreen.png")
         self.rect=self.image.get_rect()
         self.rect.top=y
         self.rect.left=x
