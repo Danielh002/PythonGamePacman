@@ -23,7 +23,9 @@ class Game:
     def loadImages(self):
         self.wallImage=pygame.image.load("images/wall.png")
         self.playerImage=pygame.image.load("images/snake.png")
-    
+        self.obstaculo1Image=pygame.image.load("images/obstaculo1.png")
+        self.obstaculo2Image=pygame.image.load("images/obstaculo2.png")
+        
     def start(self):
         while(not self.gameOver):
             a=pygame.event.get()
