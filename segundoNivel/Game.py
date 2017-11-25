@@ -1,4 +1,5 @@
 import pygame
+import random
 from Player import *
 from Ghost import *
 from LitleGhost import *
@@ -36,6 +37,7 @@ class Game:
         self.obs3.image=self.obstaculo2Image
         self.obs3.rect=self.obstaculo1Image.get_rect()
         self.obs3.rect.top=400;self.obs3.rect.left=700
+        self.posPWUP=[[100,100],[500,100],[500,400],[700,100]]
         
     def addLittleGhost(self):
         self.litleGhost.append(LitleGhost(100,500))
@@ -80,7 +82,10 @@ class Game:
                 i.move(self.ghost.rect.left,self.ghost.rect.top)
             self.clock.tick(25)
             if(self.timePWUP==self.timeInitPWUP):
-                self.powerUp.rect.top=100;self.powerUp.rect.left=500
+                # self.powerUp.rect.top=100;self.powerUp.rect.left=500
+                aux=random.choice(self.posPWUP)
+                self.powerUp.rect.left=aux[0]
+                self.powerUp.rect.top=aux[1]
             if(self.timePWUP>=self.timeFinishiPWUP):
                 self.timePWUP=0
             self.window.blit(self.background,(0,0))
