@@ -71,7 +71,11 @@ class Game:
             self.flocking.computeCohesion() #
             self.flocking.computeSeparation() #
             self.flocking.copyComputation() #
-            self.ghost.move(self.player.rect.left,self.player.rect.top)
+            if(self.timePWUP>=self.timeInitPWUP):
+                self.ghost.move(self.powerUp.rect.left,self.powerUp.rect.top)
+            else:
+                self.ghost.move(self.player.rect.left,self.player.rect.top)
+            
             for i in self.litleGhost:
                 i.move(self.ghost.rect.left,self.ghost.rect.top)
             self.clock.tick(25)
@@ -100,8 +104,9 @@ class Game:
                 self.player.restorePosition()
             if(pygame.sprite.collide_mask(self.ghost,self.obs3)):
                 self.ghost.restorePosition()
-            if(pygame.sprite.collide_mask(self.player,self.ghost)):
+            if(pygame.sprite.collide_mask(self.player,self.ghost) and self.ghost.t==0):
                 self.player.loseLife()
+                self.ghost.pause()
             if(self.player.life==0):
                 self.gameOver=True
             self.window.blit(self.obs1.image,self.obs1.rect)
