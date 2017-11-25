@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.leftPressed=False
         self.upPressed=False
         self.downPressed=False
+        self.life=3
     def moveKeyUp(self,key):
         if(key==pygame.K_RIGHT):
             self.rightPressed=False
@@ -33,6 +34,8 @@ class Player(pygame.sprite.Sprite):
     def restorePosition(self):
         self.rect.left=self.oldPos[0]
         self.rect.top=self.oldPos[1]
+    def loseLife(self):
+        self.life-=1
     def moveLeft(self):
         self.column-=1
     def moveUp(self):

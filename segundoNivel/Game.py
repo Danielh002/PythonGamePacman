@@ -100,6 +100,10 @@ class Game:
                 self.player.restorePosition()
             if(pygame.sprite.collide_mask(self.ghost,self.obs3)):
                 self.ghost.restorePosition()
+            if(pygame.sprite.collide_mask(self.player,self.ghost)):
+                self.player.loseLife()
+            if(self.player.life==0):
+                self.gameOver=True
             self.window.blit(self.obs1.image,self.obs1.rect)
             self.window.blit(self.obs2.image,self.obs2.rect)
             self.window.blit(self.obs3.image,self.obs3.rect)
