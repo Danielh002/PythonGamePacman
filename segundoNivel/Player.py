@@ -30,7 +30,9 @@ class Player(pygame.sprite.Sprite):
             self.upPressed=True
         if(key==pygame.K_DOWN):
             self.downPressed=True
-    
+    def restorePosition(self):
+        self.rect.left=self.oldPos[0]
+        self.rect.top=self.oldPos[1]
     def moveLeft(self):
         self.column-=1
     def moveUp(self):
@@ -40,6 +42,7 @@ class Player(pygame.sprite.Sprite):
     def getPos(self):
         return (self.row,self.column)
     def move(self):
+        self.oldPos=(self.rect.left,self.rect.top)
         if(self.rightPressed):
             self.rect.move_ip(10,0)
         if(self.leftPressed):

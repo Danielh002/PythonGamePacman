@@ -8,6 +8,7 @@ class Ghost(pygame.sprite.Sprite,flocking.agent):
         self.rect.left=y
         flocking.agent.__init__(self,x,y,0,0)
     def move(self,playerX,playerY):
+        self.oldPos=(self.rect.left,self.rect.top)
         dx=playerX-self.rect.left
         dy=playerY-self.rect.top
         if(dy!=0 or dx!=0):
@@ -17,3 +18,6 @@ class Ghost(pygame.sprite.Sprite,flocking.agent):
             self.posX=self.rect.left
             self.posY=self.rect.top
             self.rect.move_ip(d[0]*9,d[1]*9)
+    def restorePosition(self):
+        self.rect.left=self.oldPos[0]
+        self.rect.top=self.oldPos[1]
